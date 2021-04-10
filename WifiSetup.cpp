@@ -4,7 +4,7 @@
 #include <D1PinMap.h>
 #include <BlinkLed.h>
 
-WifiSetup::WifiSetup(String hostname, const char *ssid, const char *password) {
+WifiSetup::WifiSetup(const char *hostname, const char *ssid, const char *password) {
     _hostname = hostname;
     _ssid = ssid;
     _password = password;
@@ -24,14 +24,15 @@ void WifiSetup::connectWifi() {
     // Connect WiFi
     Serial.println();
     Serial.println();
-    Serial.print("Connecting to ");
+    Serial.print("Connecting to: ");
     Serial.println(_ssid);
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
         Serial.print(".");
     }
     Serial.println("");
-    Serial.println("WiFi connected");
+    Serial.print("WiFi connected to: ");
+    Serial.println(WiFi.SSID());
     // Print the IP address
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
@@ -48,3 +49,10 @@ void WifiSetup::wifiConnectedBlink() {
     delay(1000);
 }
 
+void WifiSetup::checkWifiConnection() {
+    if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("Wifi disconnected.");
+        Serial.println("Trying to reconnect");
+        connectWifi();
+    }
+}

@@ -7,12 +7,13 @@
 
 class WifiSetup {
 public:
-    WifiSetup(String hostname, const char* ssid, const char* password);
+    WifiSetup(const char *hostname, const char* ssid, const char* password);
     void connect();
+    void checkWifiConnection();
 private:
-    String _hostname;
-    const char* _ssid;
-    const char* _password;
+    const char *_hostname;
+    const char *_ssid;
+    const char *_password;
     void setupWifi();
     void connectWifi();
     void wifiConnectedBlink();
